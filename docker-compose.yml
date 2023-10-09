@@ -1,0 +1,15 @@
+---
+
+services:
+  plugin:
+    build: .
+    restart: unless-stopped
+    environment:
+      DRONE_SECRET: geheim
+    networks:
+      - drone
+
+networks:
+  drone:
+    external: true
+    name: drone-webhook

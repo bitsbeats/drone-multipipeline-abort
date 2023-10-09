@@ -1,0 +1,9 @@
+**/*.md
+**/*_test.go
+**/.git*
+.dockerignore
+.drone.yml
+Dockerfile
+NOTICE
+docker-compose.yml
+drone-multipipeline-abort
