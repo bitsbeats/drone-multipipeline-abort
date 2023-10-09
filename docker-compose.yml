@@ -7,7 +7,8 @@ services:
     environment:
       DRONE_SECRET: geheim
     networks:
-      - drone
+      drone:
+        ipv4_address: 192.168.72.128
 
 networks:
   drone:
