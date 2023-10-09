@@ -20,6 +20,8 @@ type spec struct {
 	Bind   string `envconfig:"DRONE_BIND"`
 	Debug  bool   `envconfig:"DRONE_DEBUG"`
 	Secret string `envconfig:"DRONE_SECRET"`
+	Server string `envconfig:"DRONE_SERVER"`
+	Token  string `envconfig:"DRONE_TOKEN"`
 }
 
 func main() {
@@ -35,12 +37,18 @@ func main() {
 	if spec.Secret == "" {
 		logrus.Fatalln("missing secret key")
 	}
+	if spec.Server == "" {
+		logrus.Fatalln("missing server url")
+	}
+	if spec.Token == "" {
+		logrus.Fatalln("missing api token")
+	}
 	if spec.Bind == "" {
 		spec.Bind = ":3000"
 	}
 
 	handler := webhook.Handler(
-		plugin.New(),
+		plugin.New(spec.Server, spec.Token),
 		spec.Secret,
 		logrus.StandardLogger(),
 	)

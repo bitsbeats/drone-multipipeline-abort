@@ -3,6 +3,7 @@
 **/.git*
 .dockerignore
 .drone.yml
+.env*
 Dockerfile
 NOTICE
 docker-compose.yml

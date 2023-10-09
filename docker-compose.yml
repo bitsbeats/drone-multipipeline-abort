@@ -6,9 +6,10 @@ services:
     restart: unless-stopped
     environment:
       DRONE_SECRET: geheim
+      DRONE_SERVER: http://app
+    env_file: .env
     networks:
-      drone:
-        ipv4_address: 192.168.72.128
+      - drone
 
 networks:
   drone:
