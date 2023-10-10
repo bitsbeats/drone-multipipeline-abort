@@ -37,7 +37,7 @@ func (p *plugin) Deliver(ctx context.Context, req *webhook.Request) error {
 
 	build := req.Build
 
-	if slices.Contains([]string{drone.StatusError, drone.StatusFailing, drone.StatusKilled}, build.Status) {
+	if len(build.Stages) < 2 || slices.Contains([]string{drone.StatusError, drone.StatusFailing, drone.StatusKilled}, build.Status) {
 		return nil
 	}
 
