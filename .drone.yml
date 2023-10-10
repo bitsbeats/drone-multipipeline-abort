@@ -1,20 +1,29 @@
+---
+
 kind: pipeline
 type: docker
 name: default
 
 steps:
-- name: build
-  image: golang
-  commands:
-  - go build
-  - go test ./...
+  - name: build
+    image: &go registry.thobits.com/images/golang:1.21-alpine
+    commands:
+      - go build
 
-- name: publish
-  image: plugins/docker
-  settings:
-    auto_tag: true
-    repo: registry.thobits.com/images/drone-multipipeline-abort
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
+  - name: test
+    image: *go
+    commands:
+      - go test ./...
+
+  - name: publish
+    image: registry.thobits.com/images/drone-kaniko
+    settings:
+      auto_tag: true
+      cache: true
+      cache_repo: cache/drone-multipipeline-abort
+      cache_ttl: 2h
+      registry: registry.thobits.com
+      repo: apps/drone-multipipeline-abort
+    when:
+      event:
+        - tag
