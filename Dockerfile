@@ -12,6 +12,7 @@ FROM alpine:3.18
 EXPOSE 3000
 
 ENV GODEBUG netdns=go
+ENV LANG=C.UTF-8
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /build/drone-multipipeline-abort /bin/
